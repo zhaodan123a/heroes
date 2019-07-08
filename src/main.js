@@ -20,5 +20,6 @@ Vue.prototype.newaxios=axios;
 
 new Vue({
   render: h => h(App),
+  //路由对象
   router,
 }).$mount('#app')
