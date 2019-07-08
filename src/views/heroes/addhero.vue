@@ -23,14 +23,14 @@
         />
       </div>
       <!-- @click.prevent表示阻止button的默认行为 -->
-      <button class="btn btn-success" @click.prevent='add'>提交</button>
+      <button class="btn btn-success" @click.prevent="add">提交</button>
     </form>
   </div>
 </template>
 
 <script>
 //引入axios
-import axios from '../../../node_modules/axios/dist/axios.js'
+import axios from "../../../node_modules/axios/dist/axios.js";
 export default {
   data() {
     return {
@@ -41,18 +41,20 @@ export default {
     };
   },
   methods: {
-      add(){
-          axios
-            .post('http://localhost:3000/heroes',this.formdata)
-            .then((Response)=>{
-                if(Response.status===201){
-                    this.$router.push('/heroes')
-                }
-            }).catch((err)=>{
-                alert('服务器异常')
-            })
-      }
-  },
+    add() {
+      //main.js中使用了baseURL，可以把地址中相同部分简化，用项目名称代替
+      axios
+        .post("heroes", this.formdata)
+        .then(Response => {
+          if (Response.status === 201) {
+            this.$router.push("/heroes");
+          }
+        })
+        .catch(err => {
+          alert("服务器异常");
+        });
+    }
+  }
 };
 </script>
 

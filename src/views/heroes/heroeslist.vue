@@ -13,7 +13,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(val,index) in list" :key='val.id'>
+          <tr v-for="(val,index) in list" :key="val.id">
             <td>{{index +1}}</td>
             <td>{{val.name}}</td>
             <td>{{val.gender}}</td>
@@ -21,9 +21,8 @@
               <!-- 将id传入，动态路由写法一： -->
               <!-- <router-link :to="{name:'edithero',params:{id:val.id}}">编辑</router-link> -->
               <!-- 写法二： -->
-              <router-link :to="'/heroes/edit/'+val.id">编辑</router-link>
-              &nbsp;&nbsp;
-              <a href="javascript:" @click='del(val.id)'>删除</a>
+              <router-link :to="'/heroes/edit/'+val.id">编辑</router-link>&nbsp;&nbsp;
+              <a href="javascript:" @click="del(val.id)">删除</a>
             </td>
           </tr>
         </tbody>
@@ -33,45 +32,49 @@
 </template>
 
 <script>
-import axios from '../../../node_modules/axios/dist/axios.js'
+import axios from "../../../node_modules/axios/dist/axios.js";
 
 export default {
   data() {
     return {
-      list:[]
-    }
+      list: []
+    };
   },
   mounted() {
     //加载完毕自动执行
-    this.getData()
+    this.getData();
   },
   methods: {
     //查询
     getData() {
+      //main.js中使用了baseURL，可以把地址中相同部分简化，用项目名称代替
       axios
-        .get("http://localhost:3000/heroes")
+        .get("heroes")
         .then(Response => {
           //解构赋值，得到状态码和数据
-          const {status,data}=Response
-          if(status===200){
-            this.list=data
+          const { status, data } = Response;
+          if (status === 200) {
+            this.list = data;
           }
-        }).catch((err)=>{
-          alert('服务器异常')
         })
+        .catch(err => {
+          alert("服务器异常");
+        });
     },
     //删除
-    del(id){
-      if(confirm('你确定要删除吗？')){
+    del(id) {
+      if (confirm("你确定要删除吗？")) {
+        //main.js中使用了baseURL，可以把地址中相同部分简化，用项目名称代替
         axios
-          .delete(`http://localhost:3000/heroes/${id}`)
-          .then((Response)=>{
-            if(Response.status===200){
+          .delete(`heroes/${id}`)
+          .then(Response => {
+            if (Response.status === 200) {
               this.getData();
             }
-          }).catch((err)=>{
-            alert('服务器异常')
           })
+          .catch(err => {
+            alert("服务器异常");
+          });
       }
     }
   }

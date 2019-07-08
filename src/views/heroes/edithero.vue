@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import axios from "../../../node_modules/axios/dist/axios";
+// main.js中定义了全局axios，不用每次引入
+// import axios from "../../../node_modules/axios/dist/axios";
 
 export default {
   props: ["id"],
@@ -42,38 +43,42 @@ export default {
     };
   },
   mounted() {
-      this.getone();
+    this.getone();
   },
   methods: {
-      //首先根据id获取原来的数据
-      getone(){
-          axios
-            .get('http://localhost:3000/heroes/'+this.id)
-            .then((Response)=>{
-                const {status,data}=Response
-                if(Response.status===200){
-                    this.formdata=data
-                }else{
-                    alert('编辑失败')
-                }
-            }).catch((err)=>{
-                alert('服务器异常')
-            })
-      },
-      //编辑提交
-      edit(){
-          axios
-            .put('http://localhost:3000/heroes/'+this.id,this.formdata)
-            .then((Response)=>{
-                if(Response.status===200){
-                    this.$router.push('/heroes');
-                }else{
-                    alert('编辑出错')
-                }
-            }).catch((err)=>{
-                alert('服务器异常')
-            })
-      }
+    //首先根据id获取原来的数据
+    getone() {
+      this.newaxios
+        //main.js中使用了baseURL，可以把地址中相同部分简化，用项目名称代替
+        .get("heroes/" + this.id)
+        .then(Response => {
+          const { status, data } = Response;
+          if (Response.status === 200) {
+            this.formdata = data;
+          } else {
+            alert("编辑失败");
+          }
+        })
+        .catch(err => {
+          alert("服务器异常");
+        });
+    },
+    //编辑提交
+    edit() {
+      this.newaxios
+        //main.js中使用了baseURL，可以把地址中相同部分简化，用项目名称代替
+        .put("heroes/" + this.id, this.formdata)
+        .then(Response => {
+          if (Response.status === 200) {
+            this.$router.push("/heroes");
+          } else {
+            alert("编辑出错");
+          }
+        })
+        .catch(err => {
+          alert("服务器异常");
+        });
+    }
   }
 };
 </script>
