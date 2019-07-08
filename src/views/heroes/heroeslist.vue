@@ -18,7 +18,10 @@
             <td>{{val.name}}</td>
             <td>{{val.gender}}</td>
             <td>
-              <a href="edit.html">编辑</a>
+              <!-- 将id传入，动态路由写法一： -->
+              <!-- <router-link :to="{name:'edithero',params:{id:val.id}}">编辑</router-link> -->
+              <!-- 写法二： -->
+              <router-link :to="'/heroes/edit/'+val.id">编辑</router-link>
               &nbsp;&nbsp;
               <a href="javascript:" @click='del(val.id)'>删除</a>
             </td>

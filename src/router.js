@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 //导入英雄列表
 import HeroesList from './views/heroes/heroeslist.vue'
 import AddHero from './views/heroes/addhero.vue'
+import EditHero from './views/heroes/edithero.vue'
 
 //导入武器管理
 import WeaponList from './views/weapons/weaponlist.vue'
@@ -26,6 +27,7 @@ const router=new VueRouter({
     {name:'weapons',path:'/weapons',component:WeaponList},
     {name:'equips',path:'/equips',component:EquipList},
     {name:'addhero',path:'/heroes/add',component:AddHero},
+    {name:'edithero',path:'/heroes/edit/:id',component:EditHero,props:true},
   ]
 })
 //将路由模块导出
